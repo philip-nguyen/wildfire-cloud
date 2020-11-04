@@ -1,3 +1,20 @@
+# Git workflow
+`git pull main`
+`git checkout -b name-component_name`
+for example `git checkout -b philip-fire_detection`
+
+After making changes:
+`git add .`
+`git commit -m 'commit message'`
+`git push origin branch-name`
+
+Merging to main:
+`git checkout main`
+`git pull origin main`
+`git merge branch-name`
+`git push origin main`
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
