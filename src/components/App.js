@@ -1,21 +1,15 @@
-import React from 'react';
-import styled from 'styled-components';
-import { GoogleMap, withScriptjs, withGoogleMap} from "react-google-maps";
+import React, {Component} from 'react'
+import styled from 'styled-components'
+import { GoogleMap, withScriptjs, withGoogleMap} from "react-google-maps"
+import MapView from "./Map.js"
+import Navbar from './Navbar.js'
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
+import Home from '../pages/Home.js'
+import WildfireAnalysis from '../pages/WildfireAnalysis.js';
+import WildfireDetection from '../pages/WildfireDetection.js';
+import WildfirePrediction from '../pages/WildfirePrediction.js';
 
-function clickMe(){
-  alert('You clicked me!');
-}
 
-function Map() {
-  return (
-    <GoogleMap
-      defaultZoom = {10}
-      defaultCenter ={{ lat: 37.338207, lng: -121.886330}}
-      />
-    );
-}
-
-const WrappedMap = withScriptjs(withGoogleMap(Map));
 
 const Button = styled.button`
   background-color: #e0e0e0;
@@ -33,16 +27,19 @@ const Button = styled.button`
 
 export default function App() {
     return (
-      <div style = {{width: '100vw', height: '100vh'}}>
-        <WrappedMap
-          googleMapURL = {`https://maps.googleapis.com/maps/api/js?v=3.exp&
-            libraries=geometry,draving,places&key=${
-              process.env.REACT_APP_GOOGLE_KEY
-            }`}
-          loadingElement = {<div style = {{ height: "100%"}} />}
-          containerElement = {<div style = {{ height: "100%" }} />}
-          mapElement = {<div style = {{ height: "100%"}} />}
-        />
-    </div>
+
+      <Router>
+        <Navbar />
+        <Switch>
+            <Route path= '/' exact component = {Home}/>
+            <Route path= '/WildfireAnalysis' exact component = {WildfireAnalysis}/>
+            <Route path= '/WildfireDetection' exact component = {WildfireDetection}/>
+            <Route path= '/WildfirePrediction' exact component = {WildfirePrediction}/>
+
+          //<Route path= '/' exact component = {MapView}/>
+        </Switch>
+      </Router>
+
+
     );
   }
