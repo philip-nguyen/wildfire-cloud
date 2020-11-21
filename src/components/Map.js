@@ -20,7 +20,7 @@ const WrappedMap = withScriptjs(withGoogleMap(Map));
 export default class MapView extends Component {
   render() {
     return (
-      <div style = {{width: '50vw', height: '50vh'}}>
+      <div style = {{width: '43vw', height: '50vh'}}>
         <WrappedMap
           googleMapURL = {`https://maps.googleapis.com/maps/api/js?v=3.exp&
             libraries=geometry,draving,places&key=${
@@ -28,7 +28,7 @@ export default class MapView extends Component {
             }`}
           loadingElement = {<div style = {{ height: "100%"}} />}
           containerElement = {<div style = {{ height: "100%" }} />}
-          mapElement = {<div style = {{ height: "100%", zIndex: "-1"}} />}
+          mapElement = {<div style = {{ height: "100%", zIndex: "0"}} />}
         />
     </div>
     );
