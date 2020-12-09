@@ -1,8 +1,9 @@
 import React from 'react';
 import DetectionDetail from '../components/DetectionDetail.js';
 import '../components/WildfireDetection.css';
-import DetectionList from '../components/DetectionList.js';
 import '../resources/example-fire-detection.png';
+import DetectionList from '../components/DetectionList.js';
+import DetectionImage from '../components/DetectionImage.js';
 
 class WildfireDetection extends React.Component {
   state = {  
@@ -10,7 +11,8 @@ class WildfireDetection extends React.Component {
     bounding_boxes: [],
     detection_scores: [],
     detection_classes: [],
-    selectedFile: null
+    selectedFile: null,
+    loading: false
   };
 
   onFileChange = (event) => {
@@ -20,33 +22,18 @@ class WildfireDetection extends React.Component {
 
   // on file upload (click the upload button)
   onFileUpload = () => {
-
-    const imgData = new FormData();
-
-    imgData.append(
-      "myImg",
-      this.state.selectedFile,
-      this.state.selectedFile.name
-    );
-
-    console.log(this.state.selectedFile);
-
     // Request made to the backend api
-    // Send formData object
-    const response = this.detectFire3(); //this.detectFire1(imgData);
-    const resultRes = this.detectScore();
+    // Call to fire detection API
+    this.detectFire();
+    // wait 10 seconds to allow detectFire to process
+    setTimeout(() => { this.detectScore(); }, 8000);  
     
-    if(response) {
-      // set SelectedFire to this response
-      // parse the text
-      console.log("RESPONSE HERE",response);
-    }
-
   }
   
   // Makes a call to prediction api results
+  // which include detection boxes, scores, and classifications
   async detectScore() {
-    //const response = detection.post('/result')
+    // Fetch request to wpp module
     fetch('https://wpp-fire-detection-ml.herokuapp.com/result', {
       method: 'POST'
     })
@@ -73,28 +60,51 @@ class WildfireDetection extends React.Component {
           push();
         }
       })
-      //return new Response(stream, { headers: { "Content-Type": "application/json" } });
+      
     })
     .then(stream => new Response(stream))
     .then(response => {
-      //console.log(response.json());
       response.json().then(data => ({
         data: data,
         status: response.status
       }))
       .then(res => {
-        console.log('Boxes', res.data.predictions[0].detection_boxes);
-        console.log('Classes', res.data.predictions[0].detection_classes);
-        console.log('Scores', res.data.predictions[0].detection_scores);
+        const detectionBoxes = res.data.predictions[0].detection_boxes;
+        const detectionScores = res.data.predictions[0].detection_scores;
+        const detectionClasses = res.data.predictions[0].detection_classes;
+
+        this.setDetectionInfo(detectionBoxes, detectionScores, detectionClasses);
       })
     })
     .catch(error => console.log("ERROR:", error));
+ 
+  }
 
+  // Set the state for the detection info
+  setDetectionInfo = (boxes, scores, classes) => {
+    let i = 0,
+     realScores = [],
+     boundingBoxes = [],
+     realClasses = [];
+    while(scores[i] > 0.90) {
+      realScores.push(scores[i]);
+      i++;
+    }
+    for(let j = 0; j < i; j++) {
+      boundingBoxes.push(boxes[j]);
+      realClasses.push(classes[j]);
+    }
+    
+    this.setState({
+      bounding_boxes: boundingBoxes,
+      detection_scores: realScores,
+      detection_classes: realClasses
+    })
     
   }
 
   // Comsumes the ReadableStream from the Fetch call
-  async detectFire3() {
+  async detectFire() {
     const formData = new FormData();
     formData.append('file', this.state.selectedFile);
 
@@ -104,7 +114,9 @@ class WildfireDetection extends React.Component {
       
     })
     .then(res => {
-      console.log('response', res);
+      // Start loading
+      this.setState({ loading: true });
+      
       const reader = res.body.getReader();
       if(!res.ok) {
         throw Error("Error getting the predict image")
@@ -131,9 +143,12 @@ class WildfireDetection extends React.Component {
     .then(response => response.blob())
     .then(blob => URL.createObjectURL(blob))
     .then(url => {
-      console.log("URL", url);
+      
       // set the state of Fire Image URL to the made url
-      this.setState({ fireImgUrl: url});
+      this.setState({ 
+        fireImgUrl: url, 
+        loading: false
+      });
     })
     .catch(err => console.error(err));
   }
@@ -172,11 +187,18 @@ class WildfireDetection extends React.Component {
           </div>
           <div className="ui row">
             <div className="four wide column"></div>
-            <div className="seven wide column ui card">
-              <img src={this.state.fireImgUrl} alt="fire prediction"/>
+            <div className="seven wide column ui fluid image">
+              <DetectionImage url={this.state.fireImgUrl} loading={this.state.loading} />
+              
             </div>
             <div className="five wide column">
-              <DetectionDetail onFireSelect={this.onFireSelect} bouding_boxes={this.state.bounding_boxes}/>
+              <h2>Detection List</h2>
+              <DetectionList 
+                boxes={this.state.bounding_boxes}
+                scores={this.state.detection_scores}
+                classes={this.state.detection_classes}
+              />
+              
             </div>
           </div>
         </div>

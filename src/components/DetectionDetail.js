@@ -1,19 +1,24 @@
 import React from 'react'
 
-const DetectionDetail = ({detail}) => {
+const DetectionDetail = ({box, score, classification}) => {
 
+  let topLeftPoint = '',
+        bottomRightPoint = '',
+        detectionConfidences = 0,
+        entityClassification = '';
   // if detail exists, parse the information given back
-  if(detail){
+  if(box && score && classification){
     
-    const boundingBoxes = detail.bounding_boxes;
-    const detectionConfidences = detail.detection_scores;
-    const classifications = detail.detection_classes;
+    topLeftPoint = formatTopLeft(box);
+    bottomRightPoint = formatBottomRight(box);
+    detectionConfidences = formatPercent(score);
+    entityClassification = classification == 1 ? 'Fire' : 'Smoke';
   }
   else {
     return (
-      <div className="ui card">
+      <div className="ui card fluid">
         <div className="content">
-          <p className="description">No Fire Selected...</p>
+          <p className="description">No Image Selected...</p>
         </div>
       </div>
     );
@@ -22,9 +27,9 @@ const DetectionDetail = ({detail}) => {
   return (
     <div className="ui card">
       <div className="content">
-        <p className="header"> Fire Details </p>
+        <p className="header">{entityClassification} Detected </p>
         <div className="meta">
-          <span className="date">{detail.detection_classes.length} Entities Detected</span>
+          <span className="date">Entity Detected</span>
         </div>
         <div className="description">
           <table>
@@ -36,16 +41,20 @@ const DetectionDetail = ({detail}) => {
             </thead>
             <tbody>
               <tr>
-                <td>Bounding Boxes</td>
-                <td></td>
+                <td>Top Left Point</td>
+                <td>{topLeftPoint}</td>
               </tr>
               <tr>
-                <td>Detection Percentage</td>
-                <td></td>
+                <td>Bottom Right Point</td>
+                <td>{bottomRightPoint}</td>
+              </tr>
+              <tr>
+                <td>Confidence</td>
+                <td>{detectionConfidences}</td>
               </tr>
               <tr>
                 <td>Classification</td>
-                <td></td>
+                <td>{entityClassification}</td>
               </tr>
             </tbody>
           </table>
@@ -53,6 +62,18 @@ const DetectionDetail = ({detail}) => {
       </div>
     </div>
   );
+}
+
+function formatTopLeft(box) {
+  return "(" + box[0].toFixed(3) + ", " + box[1].toFixed(3) + ")";
+}
+
+function formatBottomRight(box) {
+  return " (" + box[2].toFixed(3) + ", " + box[3].toFixed(3) + ")";
+}
+
+function formatPercent(score) {
+  return (score * 100).toFixed(1) + "%";
 }
 
 export default DetectionDetail;
