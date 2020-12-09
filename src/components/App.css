@@ -10,7 +10,8 @@
   .home,
   .wildfireanalysis,
   .wildfiredetection,
-  .wildfireprediction {
+  .wildfireprediction,
+  .login {
     display: flex;
     height: 90vh;
     align-items: center;

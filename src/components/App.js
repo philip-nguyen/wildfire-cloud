@@ -8,6 +8,7 @@ import Home from '../pages/Home.js'
 import WildfireAnalysis from '../pages/WildfireAnalysis.js';
 import WildfireDetection from '../pages/WildfireDetection.js';
 import WildfirePrediction from '../pages/WildfirePrediction.js';
+import Login from '../pages/LoginForm.js';
 
 
 
@@ -29,14 +30,12 @@ export default function App() {
     return (
 
       <Router>
-        <Navbar />
+        <Navbar/>
         <Switch>
             <Route path= '/' exact component = {Home}/>
             <Route path= '/WildfireAnalysis' exact component = {WildfireAnalysis}/>
             <Route path= '/WildfireDetection' exact component = {WildfireDetection}/>
             <Route path= '/WildfirePrediction' exact component = {WildfirePrediction}/>
-
-          //<Route path= '/' exact component = {MapView}/>
         </Switch>
       </Router>
 

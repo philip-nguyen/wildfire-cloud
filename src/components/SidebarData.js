@@ -1,4 +1,8 @@
 import React from 'react'
+<<<<<<< HEAD
+=======
+
+>>>>>>> wildfire-prediction
 
 export const SidebarData = [
   {
@@ -28,4 +32,5 @@ export const SidebarData = [
     icon: <i className="forward icon"/>,
     cName: 'nav-text'
   }
+
 ]

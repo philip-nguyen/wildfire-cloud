@@ -17,7 +17,7 @@ function Navbar() {
           <i className="list icon" onClick={showSidebar}/>
         </Link>
       </div>
-      <nav className = {sidebar ? 'nav-menu active' : 'nav-menu'}>
+      <nav className = {sidebar ? 'nav-menu active' : 'nav-menu' } style = {{zIndex: 3}}>
         <ul className = 'nav-menu-items' onClick={showSidebar}>
           <li className = "navbar-toggle">
             <Link to = "#" className = 'menu-bars'>
