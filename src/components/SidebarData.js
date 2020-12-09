@@ -1,8 +1,4 @@
 import React from 'react'
-<<<<<<< HEAD
-=======
-
->>>>>>> wildfire-prediction
 
 export const SidebarData = [
   {
