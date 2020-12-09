@@ -1,11 +1,15 @@
-import React from 'react'
+import React from 'react';
+
+import TableauEmbed from '../components/TableauEmbed';
+
 
 function WildfireAnalysis() {
   return (
     <div classname = 'WildfireAnalysis'>
-      <h1>WildfireAnalysis</h1>
+      <h1>Wildfire Analysis</h1>
+      <TableauEmbed />
     </div>
   )
 }
 
-export default WildfireAnalysis
+export default WildfireAnalysis;
