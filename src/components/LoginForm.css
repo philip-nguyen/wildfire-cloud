@@ -12,20 +12,6 @@ input, button {
   outline: none;
 }
 
-.Home {
-  height: 91.35vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-image: url("../Data/wildfireGIF.gif");
-  background-color: #cccccc;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-blend-mode: darken
-}
-
-
 form {
   display: block;
   position: relative;

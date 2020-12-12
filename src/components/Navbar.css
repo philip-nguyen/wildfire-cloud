@@ -6,6 +6,12 @@
     align-items: center;
   }
 
+  .navbar h1 {
+    color: white;
+    margin-left: 20px;
+    padding-bottom: 10px;
+  }
+
   .menu-bars {
     margin-left: 1rem;
     font-size: 2rem;
@@ -47,7 +53,7 @@
     height: 100%;
     display: flex;
     align-items: center;
-    padding: 0 0px;
+    padding: 0 16px;
     border-radius: 4px;
   }
 
@@ -70,4 +76,14 @@
 
   span {
     margin-left: 16px;
+  }
+
+  .logoutButton {
+    width: 25px;
+    padding: 8px 0;
+    display: flex;
+    justify-content: flex-end;
+    display: flex;
+    margin-left: auto;
+    margin-right: 50px;
   }

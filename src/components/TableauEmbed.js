@@ -6,13 +6,13 @@ function TableauEmbed() {
 
     const ref = useRef(null)
 
-    const url = 
+    const url =
     "https://public.tableau.com/views/FireCausesStory-RangeFinale/Story1?:language=en&:display_count=y&publish=yes&:origin=viz_share_link";
 
     const options = {
         device: "desktop"
     }
-            
+
     function initViz(){
         new tableau.Viz(ref.current, url, options)
     }
@@ -21,16 +21,16 @@ function TableauEmbed() {
         initViz();
     },[]);
 
-    
+
     return (
-        
+
         <div>
 
             <div ref={ref}></div>
 
         </div>
-         
-       
+
+
     );
 }
 

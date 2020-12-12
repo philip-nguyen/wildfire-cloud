@@ -8,7 +8,7 @@ const DetectionDetail = ({box, score, classification}) => {
         entityClassification = '';
   // if detail exists, parse the information given back
   if(box && score && classification){
-    
+
     topLeftPoint = formatTopLeft(box);
     bottomRightPoint = formatBottomRight(box);
     detectionConfidences = formatPercent(score);

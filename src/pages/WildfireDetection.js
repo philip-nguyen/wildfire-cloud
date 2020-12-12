@@ -4,9 +4,10 @@ import '../components/WildfireDetection.css';
 import '../resources/example-fire-detection.png';
 import DetectionList from '../components/DetectionList.js';
 import DetectionImage from '../components/DetectionImage.js';
+import '../components/Pages.css'
 
 class WildfireDetection extends React.Component {
-  state = {  
+  state = {
     selectedFireImg: null,
     bounding_boxes: [],
     detection_scores: [],
@@ -26,10 +27,10 @@ class WildfireDetection extends React.Component {
     // Call to fire detection API
     this.detectFire();
     // wait 10 seconds to allow detectFire to process
-    setTimeout(() => { this.detectScore(); }, 8000);  
-    
+    setTimeout(() => { this.detectScore(); }, 8000);
+
   }
-  
+
   // Makes a call to prediction api results
   // which include detection boxes, scores, and classifications
   async detectScore() {
@@ -56,11 +57,11 @@ class WildfireDetection extends React.Component {
               push();
             });
           };
-          
+
           push();
         }
       })
-      
+
     })
     .then(stream => new Response(stream))
     .then(response => {
@@ -77,7 +78,7 @@ class WildfireDetection extends React.Component {
       })
     })
     .catch(error => console.log("ERROR:", error));
- 
+
   }
 
   // Set the state for the detection info
@@ -94,13 +95,13 @@ class WildfireDetection extends React.Component {
       boundingBoxes.push(boxes[j]);
       realClasses.push(classes[j]);
     }
-    
+
     this.setState({
       bounding_boxes: boundingBoxes,
       detection_scores: realScores,
       detection_classes: realClasses
     })
-    
+
   }
 
   // Comsumes the ReadableStream from the Fetch call
@@ -111,12 +112,12 @@ class WildfireDetection extends React.Component {
     fetch('https://wpp-fire-detection-ml.herokuapp.com/predict', {
       method: 'POST',
       body: formData,
-      
+
     })
     .then(res => {
       // Start loading
       this.setState({ loading: true });
-      
+
       const reader = res.body.getReader();
       if(!res.ok) {
         throw Error("Error getting the predict image")
@@ -136,17 +137,17 @@ class WildfireDetection extends React.Component {
               return pump();
             });
           }
-        }  
+        }
       })
     })
     .then(stream => new Response(stream))
     .then(response => response.blob())
     .then(blob => URL.createObjectURL(blob))
     .then(url => {
-      
+
       // set the state of Fire Image URL to the made url
-      this.setState({ 
-        fireImgUrl: url, 
+      this.setState({
+        fireImgUrl: url,
         loading: false
       });
     })
@@ -165,7 +166,7 @@ class WildfireDetection extends React.Component {
           <div className="ui row">
             <div className="four wide column"></div>
             <div className="eight wide column">
-              
+
                 <div className="ui grid container">
                   <div className="ui fluid segment">
                     <h1>Wildfire Detection</h1>
@@ -179,9 +180,10 @@ class WildfireDetection extends React.Component {
                     </button>
                   </div>
                 </div>
-                
-                
-              
+
+
+
+
             </div>
             <div className="four wide column"></div>
           </div>
@@ -189,23 +191,24 @@ class WildfireDetection extends React.Component {
             <div className="four wide column"></div>
             <div className="seven wide column ui fluid image">
               <DetectionImage url={this.state.fireImgUrl} loading={this.state.loading} />
-              
+
             </div>
             <div className="five wide column">
               <h2>Detection List</h2>
-              <DetectionList 
+              <DetectionList
                 boxes={this.state.bounding_boxes}
                 scores={this.state.detection_scores}
                 classes={this.state.detection_classes}
               />
-              
+
             </div>
           </div>
         </div>
       </div>
+
     );
   }
-  
+
 };
 
 export default WildfireDetection;
