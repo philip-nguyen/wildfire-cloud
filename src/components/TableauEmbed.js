@@ -7,7 +7,7 @@ function TableauEmbed() {
     const ref = useRef(null)
 
     const url = 
-    "https://public.tableau.com/shared/JPBXHH4WK?:display_count=y&:origin=viz_share_link";
+    "https://public.tableau.com/views/FireCausesStory-RangeFinale/Story1?:language=en&:display_count=y&publish=yes&:origin=viz_share_link";
 
     const options = {
         device: "desktop"
