@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DetectionDetail = ({box, score, classification}) => {
+const DetectionDetail = ({box, score, classification, key}) => {
 
   let topLeftPoint = '',
         bottomRightPoint = '',
@@ -27,12 +27,10 @@ const DetectionDetail = ({box, score, classification}) => {
   return (
     <div className="ui card">
       <div className="content">
-        <p className="header">{entityClassification} Detected </p>
-        <div className="meta">
-          <span className="date">Entity Detected</span>
-        </div>
+        <p className="header">{entityClassification} Entity {key}</p>
+        
         <div className="description">
-          <table>
+          <table className="ui very basic collapsing celled table">
             <thead>
               <tr>
                 <th>Detail</th>
@@ -40,6 +38,14 @@ const DetectionDetail = ({box, score, classification}) => {
               </tr>
             </thead>
             <tbody>
+            <tr>
+                <td>Classification</td>
+                <td>{entityClassification}</td>
+              </tr>
+              <tr>
+                <td>Confidence</td>
+                <td>{detectionConfidences}</td>
+              </tr>
               <tr>
                 <td>Top Left Point</td>
                 <td>{topLeftPoint}</td>
@@ -47,14 +53,6 @@ const DetectionDetail = ({box, score, classification}) => {
               <tr>
                 <td>Bottom Right Point</td>
                 <td>{bottomRightPoint}</td>
-              </tr>
-              <tr>
-                <td>Confidence</td>
-                <td>{detectionConfidences}</td>
-              </tr>
-              <tr>
-                <td>Classification</td>
-                <td>{entityClassification}</td>
               </tr>
             </tbody>
           </table>
