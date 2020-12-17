@@ -12,12 +12,20 @@ const DetectionImage = ({url, isLoading}) => {
       </div>
     );
   }
-  // <div><i className="spinner loading icon"></i></div>
-  return(
-    <div>
-      <img src={url} alt="fire prediction"/>
-    </div>
-  );
+  else if (isLoading) {
+    return (
+      <div><i className="spinner loading icon"></i></div>
+    );
+  }
+  else {
+    return(
+      <div>
+        <img src={url} alt="fire prediction"/>
+      </div>
+    );
+  }
+  // 
+  
   
   
 }

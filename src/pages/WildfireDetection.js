@@ -1,10 +1,11 @@
 import React from 'react';
 import DetectionDetail from '../components/DetectionDetail.js';
+import '../components/Pages.css'
 import '../components/WildfireDetection.css';
 import '../resources/example-fire-detection.png';
 import DetectionList from '../components/DetectionList.js';
 import DetectionImage from '../components/DetectionImage.js';
-import '../components/Pages.css'
+
 
 class WildfireDetection extends React.Component {
   state = {
@@ -25,6 +26,7 @@ class WildfireDetection extends React.Component {
   onFileUpload = () => {
     // Request made to the backend api
     // Call to fire detection API
+    this.setState({ loading: true });
     this.detectFire();
     // wait 10 seconds to allow detectFire to process
     setTimeout(() => { this.detectScore(); }, 8000);
@@ -116,7 +118,7 @@ class WildfireDetection extends React.Component {
     })
     .then(res => {
       // Start loading
-      this.setState({ loading: true });
+      //this.setState({ loading: true });
 
       const reader = res.body.getReader();
       if(!res.ok) {
@@ -165,16 +167,16 @@ class WildfireDetection extends React.Component {
         <div className="ui grid">
           <div className="ui row">
             <div className="four wide column"></div>
-            <div className="eight wide column">
+            <div className="seven wide column">
 
                 <div className="ui grid container">
-                  <div className="ui fluid segment">
+                  <div className="ui segment" id="formInput">
                     <h1>Wildfire Detection</h1>
-                    <label className="ui primary floated button" htmlFor="embedSatImage">
+                    <label id="fileUpload" className="ui primary fluid button"  htmlFor="embedSatImage">
                       <i className="ui upload icon"></i>
                       Satellite Image Upload
                     </label>
-                    <input className="inputfile" type="file" id="embedSatImage" onChange={this.onFileChange} />
+                    <input class="inputfile" type="file" id="embedSatImage" onChange={this.onFileChange} />
                     <button className="ui primary button" onClick={this.onFileUpload} >
                       Run Detection
                     </button>
@@ -185,11 +187,11 @@ class WildfireDetection extends React.Component {
 
 
             </div>
-            <div className="four wide column"></div>
+            <div className="five wide column"></div>
           </div>
           <div className="ui row">
             <div className="four wide column"></div>
-            <div className="seven wide column ui fluid image">
+            <div className="seven wide column ui image">
               <DetectionImage url={this.state.fireImgUrl} loading={this.state.loading} />
 
             </div>
