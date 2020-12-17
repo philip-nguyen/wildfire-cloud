@@ -19,3 +19,9 @@
 #formInput {
 	flex: 100%;
 }
+
+#detectionList {
+	position: absoute;
+	bottom: 0;
+	margin-top: 12.6em;
+}
