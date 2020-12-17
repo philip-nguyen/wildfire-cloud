@@ -110,7 +110,7 @@ return (
       emailError={emailError}
       passwordError={passwordError}
       />
-    )};
+    )}
     </div>
   )
 }

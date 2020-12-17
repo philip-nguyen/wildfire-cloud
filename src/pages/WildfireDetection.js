@@ -187,8 +187,15 @@ class WildfireDetection extends React.Component {
 
 
             </div>
-            <div className="five wide column"></div>
+            <div className="five wide column">
+              <div className="ui card" id="detectionList">
+                <div className="content">
+                  <h2 className="header">Detection List</h2>
+                </div>              
+              </div>
+            </div>
           </div>
+          {/* Results Row */}
           <div className="ui row">
             <div className="four wide column"></div>
             <div className="seven wide column ui image">
@@ -196,7 +203,8 @@ class WildfireDetection extends React.Component {
 
             </div>
             <div className="five wide column">
-              <h2>Detection List</h2>
+              
+                
               <DetectionList
                 boxes={this.state.bounding_boxes}
                 scores={this.state.detection_scores}
